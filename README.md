@@ -1,1 +1,1 @@
-# [todo-app](https://mgalihpp.github.io/todo-app/todo-list
+# [todo-app](https://mgalihpp.github.io/todo-app/todo-list)
