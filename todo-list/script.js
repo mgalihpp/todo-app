@@ -1,38 +1,54 @@
-const todoContainer = document.querySelector(".todo");
-const addBtn = document.getElementById("submit");
+const ulElement = document.getElementById("myUl");
+const addBtn = document.getElementById("addBtn");
+const input = document.getElementById("input");
 
-let todos = [];
+// const liElement = document.getElementsByTagName("li");
 
-function displayTodo(todos) {
-  todoContainer.innerHTML = "";
-  let html = "";
-
-  for (let i = 0; i < todos.length; i++) {
-    html = `
-            <li>${i === 0 ? 1 : 1 + i}. ${todos[i]}</li>
-        `;
-    todoContainer.innerHTML += html;
-  }
-  // todos.forEach((todo) => {
-  //     html = `
-  //         <li>${todo}</li>
-  //     `
-  //     todoContainer.innerHTML += html;
-  // })
+function allInOne() {
+  addBtn.addEventListener("click", createTodo);
+  input.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      createTodo();
+    }
+  });
 }
 
-addBtn.addEventListener("click", () => {
-  const aa = window.prompt("Add your todo");
+function createTodo() {
+  const liElement = document.createElement("li");
+  let inputValue = input.value;
+  liElement.textContent = inputValue;
 
-  if (aa === null) {
-    return ""; // If the user cancels the prompt, do nothing
-  }
-  // Check if aa is a string and not a number
-  if (typeof aa === "string" && isNaN(aa)) {
-    todos.push(aa); // Add the todo to the array
-    console.log(todos);
-    displayTodo(todos); // Display the todos on the screen
+  if (inputValue === "") {
+    alert("please write something");
   } else {
-    alert("Please enter a valid todo (string).");
+    ulElement.appendChild(liElement);
   }
-});
+  input.value = "";
+
+    var span = document.createElement("span");
+    var txt = document.createTextNode("\u00D7");
+    span.className = "close";
+    span.appendChild(txt);
+    liElement.appendChild(span);
+
+  const closeEl = document.getElementsByClassName("close");
+  for (let i = 0; i < closeEl.length; i++) {
+    closeEl[i].onclick = function () {
+      var div = this.parentElement;
+      div.style.display = "none";
+    };
+  }
+
+}
+
+ulElement.addEventListener(
+  "click",
+  (e) => {
+    if (e.target.tagName === "LI") {
+      e.target.classList.toggle("checked");
+    }
+  },
+  false
+);
+
+allInOne();
